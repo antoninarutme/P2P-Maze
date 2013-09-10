@@ -8,10 +8,15 @@ import java.net.Socket;
  */
 
 public class ServerListener extends Thread {
+	final int MAP_WIDTH = 4;
+	final int MAP_HEIGHT = 4;
+	final int TREASURE_AMOUNT = 5;
 
 	ServerSocket serverSocket;
 	Socket s;
 	int client_count;
+
+	GameData globalData;
 
 	public static void main(String[] args) {
 		new ServerListener().start();
@@ -19,6 +24,8 @@ public class ServerListener extends Thread {
 
 	public void run() {
 		System.out.println(" Server thread starting..");
+
+		globalData = new GameData(MAP_WIDTH, MAP_HEIGHT, TREASURE_AMOUNT);
 
 		try {
 			serverSocket = new ServerSocket(14444);
@@ -28,7 +35,7 @@ public class ServerListener extends Thread {
 				
 				System.out.println("Client connected. Count: " + client_count );
 				
-				new ServerThread(s).start();
+				new ServerThread(s, globalData).start();
 				
 			}
 		} catch (IOException e) {

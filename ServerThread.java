@@ -11,9 +11,13 @@ import java.net.Socket;
 public class ServerThread extends Thread {
 	
 	private Socket socket;
+	private GameData globalData;
+	private int playerId;
 	
-	public ServerThread(Socket s) {
+	public ServerThread(Socket s, GameData data) {
 		socket = s;
+		globalData = data;
+		playerId = globalData.addPlayer();
 	}
 	
 	public void run() {
