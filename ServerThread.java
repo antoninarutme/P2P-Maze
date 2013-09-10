@@ -33,7 +33,6 @@ public class ServerThread extends Thread {
 			out = new PrintWriter(socket.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
-			input = in.readLine();
 			System.out.println("Hello player " + playerId);
 			
 			out.println("Hello player " + playerId);
@@ -44,7 +43,7 @@ public class ServerThread extends Thread {
 				gameMap = globalData.getMap();
 				for(int i = 0; i < gameMap.size(); i++){
 					for(int j = 0; j < gameMap.get(i).size(); j++){
-						out.printf(gameMap.get(i).get(j));
+						out.print(gameMap.get(i).get(j));
 					}
 					out.println();
 				}

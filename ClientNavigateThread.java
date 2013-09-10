@@ -34,9 +34,9 @@ public class ClientNavigateThread extends Thread {
 				while (true) {
 					input = stdin.readLine();
 					while (input != null) {
-						input = stdin.readLine();
 						out.println(input);
 						out.flush();
+						input = stdin.readLine();
 					}
 				}
 

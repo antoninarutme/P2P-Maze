@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author ivanrnld
@@ -23,7 +24,6 @@ public class GameData{
 		mapWidth_ = mazeWidth;
 		mapHeight_ = mazeHeight;
 		int amtSquares = mazeWidth*mazeHeight;
-		int playerIndex = 1;
 
 		for(int i = 0; i < mazeHeight; i++){
 			ArrayList<Integer> temp = new ArrayList<Integer>();
@@ -50,15 +50,15 @@ public class GameData{
 	}
 
 	public synchronized int addPlayer(){
+		int amtSquares = mapWidth_*mapHeight_;
+
 		while(true){
 			int playerLocation = rand_.nextInt(amtSquares);
-			if(map_.get(playerLocation/mazeWidth).get(playerLocation%mazeWidth) == EMPTY_SQUARE){
-				map_.get(playerLocation/mazeWidth).set(playerLocation%mazeWidth, playerIndex);
-				playerLocY_.add(playerLocation%mazeWidth);
-				playerLocX_.add(playerLocation%mazeWidth);
+			if(map_.get(playerLocation/mapWidth_).get(playerLocation%mapWidth_) == EMPTY_SQUARE){
+				map_.get(playerLocation/mapWidth_).set(playerLocation%mapWidth_, playerLocY_.size());
+				playerLocY_.add(playerLocation%mapWidth_);
+				playerLocX_.add(playerLocation%mapWidth_);
 				playerTreasure_.add(0);
-				playerIndex++;
-				playerAmt--;
 				break;
 			}
 		}
@@ -74,19 +74,19 @@ public class GameData{
 	 	int currY = prevY;
 
 		switch(movement){
-			case DirectionEnum.MOVE_DOWN:
+			case MOVE_DOWN:
 				currY = prevY + 1;
 				if(currY >= mapHeight_) currY = prevY;
 				break;
-			case DirectionEnum.MOVE_LEFT:
+			case MOVE_LEFT:
 				currX= prevX - 1;
 				if(currX < 0) currX = prevX;
 				break;
-			case DirectionEnum.MOVE_RIGHT:
+			case MOVE_RIGHT:
 				currX = prevX + 1;
 				if(currX >= mapWidth_) currX = prevX;
 				break;
-			case DirectionEnum.MOVE_UP:
+			case MOVE_UP:
 				currY = prevY - 1;
 				if(currY < 0) currY = prevY;
 				break;
@@ -94,8 +94,8 @@ public class GameData{
 				break;
 		}
 
-		if(map_[currY][currX] == TREASURE_SQUARE){
-			playerTreasure_.get(playerId)++;
+		if(map_.get(currY).get(currX) == TREASURE_SQUARE){
+			playerTreasure_.set(playerId, playerTreasure_.get(playerId) + 1);
 			map_.get(currY).set(currX, EMPTY_SQUARE);
 			treasureLeft_--;
 		}
