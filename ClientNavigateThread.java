@@ -21,8 +21,8 @@ public class ClientNavigateThread extends Thread {
 
 			try {
 				out = new PrintWriter(socket.getOutputStream());
-				out.println("Somapala");
-				out.flush();
+				// out.println("Somapala");
+				// out.flush();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
